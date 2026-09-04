@@ -1,0 +1,1474 @@
+[
+ {
+  "slug": "clusy-io",
+  "name": "clusy.io",
+  "tagline": "The AI IDE for Jupyter Notebook",
+  "tags": []
+ },
+ {
+  "slug": "evokoa",
+  "name": "Evokoa",
+  "tagline": "Turn your entire database into a context window",
+  "tags": []
+ },
+ {
+  "slug": "factory-intelligence",
+  "name": "Factory Intelligence",
+  "tagline": "Fully Autonomous Manufacturing",
+  "tags": []
+ },
+ {
+  "slug": "mirdain-systems",
+  "name": "Mirdain Systems",
+  "tagline": "The Self Correcting System for Manufacturing Machines",
+  "tags": []
+ },
+ {
+  "slug": "monid",
+  "name": "Monid",
+  "tagline": "OpenRouter for agent tools",
+  "tags": []
+ },
+ {
+  "slug": "mu-robotics",
+  "name": "Mu Robotics",
+  "tagline": "Bringing robots into the real world through high-quality data.",
+  "tags": []
+ },
+ {
+  "slug": "neurex",
+  "name": "Neurex",
+  "tagline": "Sleep Deeper, Live Better.",
+  "tags": []
+ },
+ {
+  "slug": "proteus-bio",
+  "name": "Proteus Bio",
+  "tagline": "AI Native biologics for N-of-1 Medicines",
+  "tags": []
+ },
+ {
+  "slug": "remster-sleep",
+  "name": "Remster Sleep",
+  "tagline": "Intelligent sleep system for health & longevity",
+  "tags": []
+ },
+ {
+  "slug": "silicon-mania",
+  "name": "Silicon Mania",
+  "tagline": "the most entertaining tech media company",
+  "tags": []
+ },
+ {
+  "slug": "twentyfour26",
+  "name": "twentyfour26",
+  "tagline": "building autonomous production cells for on-demand CNC prototyping",
+  "tags": []
+ },
+ {
+  "slug": "ukisai",
+  "name": "UkisAI",
+  "tagline": "Tiny Frontier LLMs",
+  "tags": []
+ },
+ {
+  "slug": "unlayered-3d",
+  "name": "Unlayered 3D",
+  "tagline": "5 Axis 3D Printing",
+  "tags": []
+ },
+ {
+  "slug": "nebula",
+  "name": "Nebula",
+  "tagline": "Your Super Agent is ready to work.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "sync-labs",
+  "name": "Sync Labs",
+  "tagline": "API for real-time lip sync.",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "aurelius-systems",
+  "name": "Aurelius Systems",
+  "tagline": "Advancing C-UAS through Directed Energy.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "inference",
+  "name": "Inference",
+  "tagline": "AI model training and hosting platform.",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "anara",
+  "name": "Anara",
+  "tagline": "AI for researchers.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "thirdweb",
+  "name": "thirdweb",
+  "tagline": "Full-stack, open-source web3 development platform.",
+  "tags": [
+   "Web3",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "heyclicky",
+  "name": "heyclicky",
+  "tagline": "an ai buddy that lives on your mac",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "trass-games",
+  "name": "Trass Games",
+  "tagline": "VR game studio.",
+  "tags": [
+   "AR/VR",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "livekit",
+  "name": "LiveKit",
+  "tagline": "Open-source real-time communication platform and SDK.",
+  "tags": [
+   "B2B",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "magical-toys",
+  "name": "Magical Toys",
+  "tagline": "AI plush toys for screen-free kids’ play.",
+  "tags": [
+   "AI/ML",
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "shapes",
+  "name": "Shapes",
+  "tagline": "AI with friends.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "lexica",
+  "name": "Lexica",
+  "tagline": "A search engine for AI-generated images.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "womp",
+  "name": "Womp",
+  "tagline": "Concept To Render In Minutes.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "paraform",
+  "name": "Paraform",
+  "tagline": "Match with expert recruiters and fill your hardest roles.",
+  "tags": [
+   "AI/ML",
+   "B2B"
+  ]
+ },
+ {
+  "slug": "syncere",
+  "name": "Syncere AI",
+  "tagline": "Robots that blend in to your home.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "kontigo",
+  "name": "Kontigo",
+  "tagline": "USDC-Smart Neobank for Latinos.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "rek",
+  "name": "Rek",
+  "tagline": "Full-contact combat robot sports league.",
+  "tags": [
+   "AR/VR",
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "rork",
+  "name": "Rork",
+  "tagline": "Build mobile apps with AI, no code.",
+  "tags": [
+   "AI/ML",
+   "DevTools",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "tangible",
+  "name": "Tangible",
+  "tagline": "Humanoid robots for your home.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "ato",
+  "name": "Ato",
+  "tagline": "AI companion device for older adults.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "parse",
+  "name": "Parse",
+  "tagline": "Turn any website into an API.",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "fluid",
+  "name": "Fluid",
+  "tagline": "The best way to be together when you can’t be together.",
+  "tags": [
+   "AR/VR"
+  ]
+ },
+ {
+  "slug": "pamir",
+  "name": "Pamir",
+  "tagline": "Your Pocket AI Agent.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "orangewood-labs",
+  "name": "Orangewood Labs",
+  "tagline": "Building NLP-powered home robotics systems.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "budbreak",
+  "name": "Budbreak",
+  "tagline": "Autonomous vineyard disease detection systems.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "catalyx",
+  "name": "Catalyx Space",
+  "tagline": "Autonomous labs in space.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "gather",
+  "name": "Gather",
+  "tagline": "People + knowledge. All in one place.",
+  "tags": [
+   "B2B"
+  ]
+ },
+ {
+  "slug": "gym-class",
+  "name": "Gym Class VR",
+  "tagline": "Immersive VR sports platform.",
+  "tags": [
+   "AR/VR",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "levels-fyi",
+  "name": "Levels.fyi",
+  "tagline": "Insights on companies, salaries, jobs and more.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "buildspace",
+  "name": "buildspace",
+  "tagline": "the place where people build cool stuff.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "stratus",
+  "name": "Stratus AI",
+  "tagline": "Safer airports begin with intelligence.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "dreampark",
+  "name": "DreamPark",
+  "tagline": "Mixed reality theme parks in your backyard.",
+  "tags": [
+   "AR/VR",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "atom-limbs",
+  "name": "Atom Limbs",
+  "tagline": "The world’s first mind-controlled bionic arm.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "othership",
+  "name": "Othership",
+  "tagline": "Immersive wellness experiences.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "axial-composites-industries",
+  "name": "Axial Composites industries",
+  "tagline": "Automating thermoplastic composites manufacturing.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "thermopylae-aerospace",
+  "name": "Thermopylae Aerospace",
+  "tagline": "Autonomous, affordable air defense platforms.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "hup",
+  "name": "Hup AI",
+  "tagline": "In-home AI assistant that sees and manages your spaces.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "atelier-missor",
+  "name": "Atelier Missor",
+  "tagline": "A classical foundry turned modern in Paris.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "3e8-robotics",
+  "name": "Blueprint.io",
+  "tagline": "AI-powered hardware design tool",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "adaptyv-bio",
+  "name": "Adaptyv Bio",
+  "tagline": "The cloud lab for protein designers.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "adauris",
+  "name": "Adauris",
+  "tagline": "Create a branded podcast and identify high-intent leads.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "afriex",
+  "name": "Afriex",
+  "tagline": "Send and receive money in minutes.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "agentspark",
+  "name": "AgentSpark",
+  "tagline": "AI-Native Compliance for Supply Finance.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "aisle",
+  "name": "Vendo",
+  "tagline": "Let your users build their own features on top of your product",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "alakazam",
+  "name": "Alakazam",
+  "tagline": "The World Model Game Engine.",
+  "tags": [
+   "AI/ML",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "anytopic",
+  "name": "Anytopic",
+  "tagline": "Learn about anything faster with mini audiobooks.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "argos",
+  "name": "Argos",
+  "tagline": "AI sportswear that tracks your muscles",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "astral",
+  "name": "Astral",
+  "tagline": "Work alongside AI agents.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "atlas",
+  "name": "Atlas",
+  "tagline": "Write, test, and deploy smart contracts in minutes.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "audioread",
+  "name": "Audioread",
+  "tagline": "Turns any article/text into natural-sounding audio/podcasts.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "benchflow",
+  "name": "BenchFlow",
+  "tagline": "Data and environments for AI4AI and AI4Sci",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "betterbrain",
+  "name": "Betterbrain",
+  "tagline": "AI copilot for company data.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "bits",
+  "name": "Bits",
+  "tagline": "Invest spare change from every purchase into crypto.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "blobtown",
+  "name": "Blobtown",
+  "tagline": "Creative social VR game experiences.",
+  "tags": [
+   "AR/VR"
+  ]
+ },
+ {
+  "slug": "blueberry",
+  "name": "Blueberry",
+  "tagline": "1:1 AI marketer for ecommerce brands.",
+  "tags": [
+   "AI/ML",
+   "B2B"
+  ]
+ },
+ {
+  "slug": "boondoggle",
+  "name": "Boondoggle AI",
+  "tagline": "Generate AI workflows from all your team's apps.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "boxtree",
+  "name": "Boxtree",
+  "tagline": "Family games for spatial computing.",
+  "tags": [
+   "AR/VR"
+  ]
+ },
+ {
+  "slug": "buoyant",
+  "name": "Buoyant",
+  "tagline": "Autonomous airships for low-cost cargo delivery.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "causal",
+  "name": "Causal",
+  "tagline": "Financial planning made simple.",
+  "tags": [
+   "B2B"
+  ]
+ },
+ {
+  "slug": "cavalla",
+  "name": "Cavalla",
+  "tagline": "Waymo for forklifts.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "clayton-farms",
+  "name": "Clayton Farms",
+  "tagline": "Putting farms inside restaurants.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "clear-gene",
+  "name": "Clear Gene",
+  "tagline": "RNA Diagnostics.",
+  "tags": []
+ },
+ {
+  "slug": "clova",
+  "name": "Clova",
+  "tagline": "AI assistant for filmmakers.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "colossus",
+  "name": "Colossus",
+  "tagline": "Stablecoin credit card network for payments.",
+  "tags": [
+   "Web3",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "comfy-workflows",
+  "name": "Comfy Workflows",
+  "tagline": "Explore thousands of workflows.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "compiler",
+  "name": "Compiler",
+  "tagline": "Add AI to your app in minutes.",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "coplay",
+  "name": "Coplay",
+  "tagline": "AI copilots for game engines.",
+  "tags": [
+   "AI/ML",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "cypherock",
+  "name": "Cypherock",
+  "tagline": "Cypherock is building the World's safest web3 wallet.",
+  "tags": [
+   "Web3",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "dataleap",
+  "name": "Dataleap",
+  "tagline": "GenAI market-research platform.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "dedale",
+  "name": "Ariana",
+  "tagline": "Get more quality work done out of Claude Code.",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "deeptrust",
+  "name": "DeepTrust",
+  "tagline": "Combat vishing. Identify deepfakes.",
+  "tags": [
+   "AI/ML",
+   "B2B"
+  ]
+ },
+ {
+  "slug": "deft",
+  "name": "Deft Robotics",
+  "tagline": "Drop-in wheeled humanoid robot work cells for Tier 1 automotive manufacturers.",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "digital-metal",
+  "name": "Digital Metal",
+  "tagline": "A metal casting foundry and digital manufacturing platform.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "dorado",
+  "name": "Dorado",
+  "tagline": "American Full-Size Electric Dirt Bikes.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "enjamb",
+  "name": "Enjamb Labs",
+  "tagline": "Where drug teams run their entire program, discovery to FDA approval",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "enso-biosciences",
+  "name": "Enso Biosciences",
+  "tagline": "The frontier AI labs for precision oncology",
+  "tags": []
+ },
+ {
+  "slug": "entelexo-biotherapeutics",
+  "name": "Entelexo Biotherapeutics",
+  "tagline": "Novel methods of engineering therapeutic exosomes.",
+  "tags": []
+ },
+ {
+  "slug": "everythingelse-ai",
+  "name": "everythingelse.ai",
+  "tagline": "Automate the dreaded invoice hunt with AI.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "eyecandy",
+  "name": "Eyecandy Robotics",
+  "tagline": "Bringing characters to life through robotics and AI.",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "flux-ai",
+  "name": "Flux AI",
+  "tagline": "High-quality AI image training for everyone.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "gabber",
+  "name": "Gabber",
+  "tagline": "Build realtime AI.",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "general-bionix",
+  "name": "UNBRKN",
+  "tagline": "AI Coach to help you quit Nicotine.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "genie-mobility",
+  "name": "Genie Mobility",
+  "tagline": "Autonomous delivery e-bikes.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "ggwp",
+  "name": "GGWP",
+  "tagline": "AI moderation for holistic game community management.",
+  "tags": [
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "guardian",
+  "name": "Guardian",
+  "tagline": "Digital privacy simplified.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "halo",
+  "name": "Halo",
+  "tagline": "Summon a stylish, autonomous electric car with ease.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "hayla",
+  "name": "Hayla",
+  "tagline": "Direct current network for AI centers.",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "helios",
+  "name": "Helios",
+  "tagline": "The first AI-powered government affairs agent.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "herdcycle",
+  "name": "HerdCycle",
+  "tagline": "Smart Cattle Ear Tag.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "heroic-story",
+  "name": "Heroic Story",
+  "tagline": "Web3 storytelling hub for creators and collectors.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "huddle01",
+  "name": "Huddle01",
+  "tagline": "DePIN for RTC.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "hurupay",
+  "name": "Hurupay",
+  "tagline": "Global USD banking powered by stablecoins.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "inerxia",
+  "name": "Inerxia",
+  "tagline": "Autonomous retention engine for subscription companies",
+  "tags": []
+ },
+ {
+  "slug": "inferenceindex",
+  "name": "InferenceIndex",
+  "tagline": "Agents that learn in production.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "interactionlabs",
+  "name": "InteractionLabs",
+  "tagline": "Lamp robots with vision and voice.",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "ion",
+  "name": "ION",
+  "tagline": "Autonomous AI Product Designer.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "joon-health",
+  "name": "Joon Health",
+  "tagline": "Video game that motivates ADHD kids in real-life.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "jungle",
+  "name": "Jungle",
+  "tagline": "Create practice questions in seconds.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "kayyo",
+  "name": "Kayyo",
+  "tagline": "AI MMA trainer in your pocket.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "kendal",
+  "name": "Kendal",
+  "tagline": "AI Assistant for Real Estate Brokerages.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "kisuke",
+  "name": "kisuke",
+  "tagline": "A native iOS IDE.",
+  "tags": [
+   "AI/ML",
+   "DevTools",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "layerup",
+  "name": "Layerup",
+  "tagline": "AI Agents for Financial Institutions.",
+  "tags": [
+   "AI/ML",
+   "B2B"
+  ]
+ },
+ {
+  "slug": "leap",
+  "name": "Comp AI",
+  "tagline": "Automate any workflow with AI.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "lifesim",
+  "name": "LifeSim",
+  "tagline": "Experience any life. Anytime. Anywhere.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "lucid-bots",
+  "name": "Lucid Bots",
+  "tagline": "Robots That Work. Literally.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "lumaa",
+  "name": "Lumaa",
+  "tagline": "Vendor RFP search and response.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "lunabill",
+  "name": "LunaBill",
+  "tagline": "Automate Your AR Calls.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "macro-audits",
+  "name": "Macro Audits",
+  "tagline": "Secure your next web3 project.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "magic-flow",
+  "name": "Magic Flow",
+  "tagline": "AI productivity tracker.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "makermods",
+  "name": "MakerMods",
+  "tagline": "USB-C robot modules. Controlled with AI.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "matchday",
+  "name": "Matchday",
+  "tagline": "Building the game for the five billion soccer fans.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "matrix-biotech",
+  "name": "Matrix Bio",
+  "tagline": "True at-home biological testing.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "mecagent",
+  "name": "MecAgent",
+  "tagline": "AI copilot for mechanical CAD software.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "mediar",
+  "name": "Mediar",
+  "tagline": "Automate data entry in legacy software like SAP.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "million-victories",
+  "name": "Million Victories",
+  "tagline": "Game Studio.",
+  "tags": [
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "miniba",
+  "name": "Miniba",
+  "tagline": "Supermarkets in your Airbnb.",
+  "tags": []
+ },
+ {
+  "slug": "musicfy",
+  "name": "Musicfy",
+  "tagline": "AI tools for artists and musicians around the world.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "myr",
+  "name": "Myr",
+  "tagline": "VR games studio.",
+  "tags": [
+   "AR/VR"
+  ]
+ },
+ {
+  "slug": "neuronav",
+  "name": "Episode Intelligence",
+  "tagline": "Data Efficiency Layer for Robot Learning",
+  "tags": [
+   "AI/ML",
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "neurosity",
+  "name": "Neurosity",
+  "tagline": "Next generation BCI headset.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "nexavision",
+  "name": "Nexavision",
+  "tagline": "Next Gen AI for Sports Analytics.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "null-hypothesis",
+  "name": "Null Hypothesis",
+  "tagline": "Embodied Gameplay AR/VR Platform.",
+  "tags": [
+   "AI/ML",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "omgrab",
+  "name": "OMGrab",
+  "tagline": "Open-source multimodal annotation tools.",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "omnipilot",
+  "name": "Omnipilot",
+  "tagline": "Your AI copilot everywhere on macOS.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "operand",
+  "name": "Operand",
+  "tagline": "Pricing engine for retail brands.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "orb",
+  "name": "Orb",
+  "tagline": "Web3 social platform.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "otherside-ai",
+  "name": "Otherside AI",
+  "tagline": "We're building you an AI Personal Assistant.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "pally",
+  "name": "Pally",
+  "tagline": "AI for your professional relationships.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "pieline",
+  "name": "PieLine",
+  "tagline": "24/7 AI Phone Answering",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "pirouette-pharma",
+  "name": "Pirouette Pharma",
+  "tagline": "Easily administer a dose in seconds.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "playscape",
+  "name": "playscape",
+  "tagline": "make a game without code.",
+  "tags": [
+   "AI/ML",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "ploid",
+  "name": "Ploid",
+  "tagline": "The people data platform",
+  "tags": []
+ },
+ {
+  "slug": "pointer-gg",
+  "name": "Pointer.gg",
+  "tagline": "Instant work opportunities for devs in crypto.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "polysynth",
+  "name": "Polysynth",
+  "tagline": "Multi-material resin 3D printer.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "promakhos-therapeutics",
+  "name": "Promakhos Therapeutics",
+  "tagline": "Innate immunity small-molecule drugs.",
+  "tags": []
+ },
+ {
+  "slug": "psview",
+  "name": "PSVIEW",
+  "tagline": "AI that",
+  "tags": []
+ },
+ {
+  "slug": "quo-labs",
+  "name": "Quo Labs",
+  "tagline": "AI caretakers for the elderly.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "radify-metals",
+  "name": "Radify Metals",
+  "tagline": "On-site metal production anywhere on Earth.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "rally",
+  "name": "Rally",
+  "tagline": "Transforming online meetings.",
+  "tags": []
+ },
+ {
+  "slug": "ready-player-me",
+  "name": "Ready Player Me",
+  "tagline": "Cross-game 3D avatars for virtual worlds.",
+  "tags": [
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "red-team-interactive",
+  "name": "Red Team Interactive",
+  "tagline": "A Virtual Reality Game Studio.",
+  "tags": [
+   "AR/VR"
+  ]
+ },
+ {
+  "slug": "remotechess",
+  "name": "RemoteChess",
+  "tagline": "A robotic chessboard that brings online chess IRL.",
+  "tags": [
+   "Consumer",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "roots",
+  "name": "Roots Homes",
+  "tagline": "Shop homes with assumable mortgage rates as low as 3%.",
+  "tags": [
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "scenario",
+  "name": "Scenario",
+  "tagline": "Game art generator for studios.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "simon-says",
+  "name": "Simon Says",
+  "tagline": "Figma for video editing.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "simpleautomation",
+  "name": "MicroFactory",
+  "tagline": "Robot that automates manual work, starting with electronics assembly.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "smashsend",
+  "name": "SMASHSEND",
+  "tagline": "Turns emails into revenue via AI-driven marketing.",
+  "tags": [
+   "B2B"
+  ]
+ },
+ {
+  "slug": "sobrief",
+  "name": "SoBrief",
+  "tagline": "AI book summaries and audio narrations for quick learning.​",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "sorce",
+  "name": "Sorce",
+  "tagline": "AI Talent Marketplace.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "spindl",
+  "name": "Spindl",
+  "tagline": "Attribution and user-acquisition measurement for Web 3.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "starlight-labs",
+  "name": "Starlight Labs",
+  "tagline": "Bringing worlds to life.",
+  "tags": [
+   "AI/ML",
+   "Gaming"
+  ]
+ },
+ {
+  "slug": "sume-labs",
+  "name": "Sume",
+  "tagline": "Video Agent API built for automation",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "superworker",
+  "name": "Superworker",
+  "tagline": "Your spreadsheet powered by AI.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "tarteel",
+  "name": "Tarteel",
+  "tagline": "AI Quran recitation app.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "thalassa-robotics",
+  "name": "Thalassa Robotics",
+  "tagline": "True subsea autonomy.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "the-privacy-and-sovereignty-company",
+  "name": "The Privacy and Sovereignty Company",
+  "tagline": "Tools to protect individual privacy and freedom.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "trace",
+  "name": "Trace",
+  "tagline": "AI-native design-to-manufacturing layer for hardware",
+  "tags": []
+ },
+ {
+  "slug": "trepo",
+  "name": "Trepo",
+  "tagline": "Fridge OS that auto-orders your groceries.",
+  "tags": [
+   "AI/ML",
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "trexo-robotics",
+  "name": "Trexo Robotics",
+  "tagline": "Crafts exoskeletons aiding kids with cerebral palsy to walk.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "ultramail",
+  "name": "Ultramail",
+  "tagline": "The Future of Email Is Here.",
+  "tags": [
+   "AI/ML",
+   "Consumer"
+  ]
+ },
+ {
+  "slug": "unweave",
+  "name": "Unweave",
+  "tagline": "ML infra to train/deploy models fast.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "vena-vitals",
+  "name": "Vena Vitals",
+  "tagline": "Wear your health, monitor your pressure continuously.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "vi",
+  "name": "Vi",
+  "tagline": "Fitness Gaming.",
+  "tags": [
+   "AR/VR"
+  ]
+ },
+ {
+  "slug": "vime",
+  "name": "Vime",
+  "tagline": "Client portals for service firms.",
+  "tags": []
+ },
+ {
+  "slug": "web-transpose",
+  "name": "Web Transpose",
+  "tagline": "Turn the web into clean data.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "wombo",
+  "name": "Wombo",
+  "tagline": "AI entertainment apps for images, video and songs.",
+  "tags": [
+   "Web3"
+  ]
+ },
+ {
+  "slug": "world-intelligence",
+  "name": "World Intelligence",
+  "tagline": "Data Infrastructure for Physical AI.",
+  "tags": [
+   "AI/ML"
+  ]
+ },
+ {
+  "slug": "yummy-future",
+  "name": "Yummy Future",
+  "tagline": "Robotic Coffee That Scales.",
+  "tags": [
+   "Hardware"
+  ]
+ },
+ {
+  "slug": "zeet",
+  "name": "Zeet",
+  "tagline": "The Cloud Companion for Kubernetes & Terraform.",
+  "tags": [
+   "DevTools"
+  ]
+ },
+ {
+  "slug": "zeit-medical",
+  "name": "Zeit Medical",
+  "tagline": "Safety for the brain.",
+  "tags": [
+   "AI/ML"
+  ]
+ }
+]

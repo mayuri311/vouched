@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { BY_SLUG, STARTUPS } from "@/lib/startups";
-import { tierOf, type Score } from "@/lib/score";
+import { CARD_COLUMNS, PAGE_SIZE, type Card } from "@/lib/registry";
+import { SCORE_COLUMNS, tierOf, type Score } from "@/lib/score";
 import { Deck } from "@/components/Deck";
 import { Logo } from "@/components/Logo";
 
@@ -14,11 +14,19 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: scores } = await supabase
-    .from("startup_scores")
-    .select("slug, rights, lefts, vouches, score");
+  const [{ data: scores }, { count: registrySize }] = await Promise.all([
+    supabase.from("startup_scores").select(SCORE_COLUMNS),
+    supabase.from("startups").select("slug", { count: "exact", head: true }),
+  ]);
 
-  if (!user) return <Landing scores={(scores as Score[]) ?? []} />;
+  if (!user) {
+    return (
+      <Landing
+        scores={(scores as Score[]) ?? []}
+        registrySize={registrySize ?? 0}
+      />
+    );
+  }
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -28,22 +36,47 @@ export default async function Home() {
 
   if (!profile) redirect("/onboarding");
 
-  const [{ data: swipes }, { data: vouches }] = await Promise.all([
-    supabase.from("swipes").select("slug, dir"),
-    supabase.from("vouches").select("slug, body"),
-  ]);
+  const [{ data: cards }, { data: swipes }, { data: vouches }] =
+    await Promise.all([
+      supabase
+        .from("deck_cards")
+        .select(CARD_COLUMNS)
+        .order("listed_at", { ascending: false })
+        .order("slug", { ascending: true })
+        .range(0, PAGE_SIZE - 1),
+      supabase.from("swipes").select("slug, dir"),
+      supabase.from("vouches").select("slug, body"),
+    ]);
+
+  const mySwipes = Object.fromEntries(
+    (swipes ?? []).map((s) => [s.slug, s.dir]),
+  );
 
   return (
     <Deck
       userId={user.id}
+      // The first page is raw; the deck drops anything already swiped and
+      // pulls further pages itself.
+      initialCards={(((cards ?? []) as unknown) as Card[]).filter(
+        (c) => !(c.slug in mySwipes),
+      )}
       initialScores={(scores as Score[]) ?? []}
-      mySwipes={Object.fromEntries((swipes ?? []).map((s) => [s.slug, s.dir]))}
-      myVouches={Object.fromEntries((vouches ?? []).map((v) => [v.slug, v.body]))}
+      registrySize={registrySize ?? 0}
+      mySwipes={mySwipes}
+      myVouches={Object.fromEntries(
+        (vouches ?? []).map((v) => [v.slug, v.body]),
+      )}
     />
   );
 }
 
-function Landing({ scores }: { scores: Score[] }) {
+function Landing({
+  scores,
+  registrySize,
+}: {
+  scores: Score[];
+  registrySize: number;
+}) {
   const top = scores
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score || b.rights - a.rights)
@@ -53,12 +86,12 @@ function Landing({ scores }: { scores: Score[] }) {
     <>
       <section className="hero">
         <h1>
-          {STARTUPS.length} startups wrote a <em>dating profile</em>.
+          {registrySize} startups wrote a <em>dating profile</em>.
         </h1>
         <p>
-          Every company in the Founders Inc portfolio, answering Hinge
-          prompts. Swipe through them. When one is genuinely good, vouch for
-          it with your name on the line — and watch a founder&rsquo;s status
+          Startups from Founders Inc, Y Combinator, and CMU itself — answering
+          Hinge prompts. Swipe through them. When one is genuinely good, vouch
+          for it with your name on the line, and watch a founder&rsquo;s status
           climb because of you.
         </p>
         <Link className="btn" href="/login">
@@ -103,17 +136,16 @@ function Landing({ scores }: { scores: Score[] }) {
         {top.length ? (
           <ol className="lad" style={{ padding: 8 }}>
             {top.map((s, i) => {
-              const startup = BY_SLUG[s.slug];
-              if (!startup) return null;
+              const tier = tierOf(s.score);
               return (
                 <li key={s.slug}>
                   <span className="rk">{i + 1}</span>
-                  <Logo startup={startup} size={28} />
+                  <Logo name={s.name} src={s.logo_url} size={28} />
                   <Link className="nm" href={`/s/${s.slug}`}>
-                    {startup.name}
+                    {s.name}
                   </Link>
-                  <span className="tier" style={{ background: tierOf(s.score).bg, color: tierOf(s.score).fg }}>
-                    {tierOf(s.score).name}
+                  <span className="tier" style={{ background: tier.bg, color: tier.fg }}>
+                    {tier.name}
                   </span>
                   <span className="sc" style={{ color: "var(--accent)" }}>
                     {s.score}
@@ -124,8 +156,8 @@ function Landing({ scores }: { scores: Score[] }) {
           </ol>
         ) : (
           <div className="empty">
-            Nobody has swiped yet — the board starts at a real zero. Sign in
-            and you will be the first name on it.
+            Nobody has swiped yet — the board starts at a real zero. Sign in and
+            you will be the first name on it.
           </div>
         )}
       </div>

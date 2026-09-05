@@ -1,8 +1,12 @@
 /**
- * Loads the 183 Founders Inc companies into the `startups` table.
- * Needs the service role key, because `startups` has no insert policy.
+ * Loads the 183 Founders Inc companies and their hand-written Hinge
+ * profiles into Supabase. Needs the service role key, because `startups`
+ * only accepts community rows from the browser.
  *
  *   npm run seed
+ *
+ * Safe to re-run: everything upserts on slug. Re-running does NOT clobber
+ * a profile a person has rewritten.
  */
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -24,30 +28,60 @@ if (!url || !key) {
 const rows = JSON.parse(readFileSync(join(here, "startups.json"), "utf8"));
 const supabase = createClient(url, key, { auth: { persistSession: false } });
 
-const { error } = await supabase
-  .from("startups")
-  .upsert(rows, { onConflict: "slug" });
-
-if (error) {
-  // PGRST205 is PostgREST saying the table is not in its schema cache —
-  // almost always because schema.sql has not been run yet.
+const fail = (label, error) => {
+  if (!error) return;
   if (error.code === "PGRST205") {
     const ref = url.replace(/^https:\/\/([^.]+)\.supabase\.co.*$/, "$1");
     console.error(
-      "The `startups` table does not exist yet.\n\n" +
-        "Run supabase/schema.sql first:\n" +
+      `${label}: that table does not exist yet.\n\n` +
+        "Run supabase/schema.sql and then supabase/002_living_registry.sql:\n" +
         `  https://supabase.com/dashboard/project/${ref}/sql/new\n\n` +
         "On macOS:  pbcopy < supabase/schema.sql\n" +
-        "then paste it into that editor and hit Run. Then `npm run seed` again.",
+        "then paste, Run, and repeat for 002_living_registry.sql.",
     );
-    process.exit(1);
+  } else {
+    console.error(`${label}:`, error.message);
   }
-  console.error("Seed failed:", error.message);
   process.exit(1);
-}
+};
+
+// 1. The companies themselves.
+const { error: startupError } = await supabase.from("startups").upsert(
+  rows.map(({ prompts, ...startup }) => startup),
+  { onConflict: "slug" },
+);
+fail("Seeding startups", startupError);
+
+// 2. Their profiles — but never overwrite one a person has since written.
+const { data: written } = await supabase
+  .from("startup_profiles")
+  .select("slug")
+  .eq("generated", false)
+  .not("author_id", "is", null);
+
+const humanWritten = new Set((written ?? []).map((r) => r.slug));
+
+const profiles = rows
+  .filter((r) => !humanWritten.has(r.slug))
+  .map((r) => ({
+    slug: r.slug,
+    prompts: r.prompts,
+    author_id: null,
+    generated: false, // hand-written by us, not by a model
+    thin: false,
+  }));
+
+const { error: profileError } = await supabase
+  .from("startup_profiles")
+  .upsert(profiles, { onConflict: "slug" });
+fail("Seeding profiles", profileError);
 
 const { count } = await supabase
   .from("startups")
   .select("slug", { count: "exact", head: true });
 
-console.log(`Seeded ${rows.length} companies. Table now holds ${count}.`);
+console.log(
+  `Seeded ${rows.length} companies and ${profiles.length} profiles. ` +
+    `Registry now holds ${count}.` +
+    (humanWritten.size ? ` Left ${humanWritten.size} rewritten profile(s) alone.` : ""),
+);

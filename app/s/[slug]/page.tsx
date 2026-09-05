@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { BY_SLUG, STARTUPS } from "@/lib/startups";
-import { EMPTY_SCORE, tierOf, type Score } from "@/lib/score";
+import { CARD_COLUMNS, SOURCE_LABEL, type Card } from "@/lib/registry";
+import { EMPTY_SCORE, SCORE_COLUMNS, tierOf, type Score } from "@/lib/score";
 import { Logo } from "@/components/Logo";
 
 export const dynamic = "force-dynamic";
+
+async function getCard(slug: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("deck_cards")
+    .select(CARD_COLUMNS)
+    .eq("slug", slug)
+    .maybeSingle();
+  return ((data as unknown) as Card | null) ?? null;
+}
 
 export async function generateMetadata({
   params,
@@ -13,9 +23,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const s = BY_SLUG[slug];
-  return s
-    ? { title: `${s.name} · Vouched`, description: s.tagline }
+  const card = await getCard(slug);
+  return card
+    ? { title: `${card.name} · Vouched`, description: card.tagline }
     : { title: "Not found · Vouched" };
 }
 
@@ -33,45 +43,56 @@ export default async function StartupPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const startup = BY_SLUG[slug];
-  if (!startup) notFound();
+  const card = await getCard(slug);
+  if (!card) notFound();
 
   const supabase = await createClient();
-  const [{ data: scoreRow }, { data: vouches }] = await Promise.all([
-    supabase
-      .from("startup_scores")
-      .select("slug, rights, lefts, vouches, score")
-      .eq("slug", slug)
-      .maybeSingle(),
-    supabase
-      .from("vouch_feed")
-      .select("body, created_at, handle, display_name, role")
-      .eq("slug", slug)
-      .order("created_at", { ascending: false }),
-  ]);
+  const [{ data: scoreRow }, { data: vouches }, { count: above }] =
+    await Promise.all([
+      supabase
+        .from("startup_scores")
+        .select(SCORE_COLUMNS)
+        .eq("slug", slug)
+        .maybeSingle(),
+      supabase
+        .from("vouch_feed")
+        .select("body, created_at, handle, display_name, role")
+        .eq("slug", slug)
+        .order("created_at", { ascending: false }),
+      supabase
+        .from("startup_scores")
+        .select("slug", { count: "exact", head: true })
+        .gt("score", 0),
+    ]);
 
-  const score = (scoreRow as Score) ?? EMPTY_SCORE(slug);
+  const score = (scoreRow as Score) ?? EMPTY_SCORE(slug, card.name, card.tagline);
   const tier = tierOf(score.score);
   const feed = ((vouches as Vouch[]) ?? []).filter((v) => v.body.trim());
-  const rank =
-    STARTUPS.length && score.score > 0
-      ? await rankOf(supabase, score.score)
-      : null;
+  const prompts = card.prompts ?? [];
 
   return (
     <>
       <div className="prof-head">
-        <Logo startup={startup} size={58} />
+        <Logo name={card.name} src={card.logo_url} size={58} />
         <div style={{ minWidth: 0, flex: 1 }}>
-          <h1>{startup.name}</h1>
+          <h1>{card.name}</h1>
           <div className="chips" style={{ marginTop: 8 }}>
-            {(startup.tags.length ? startup.tags : ["Founders Inc"]).map((t) => (
+            {card.tags.map((t) => (
               <i className="chip" key={t}>
                 {t}
               </i>
             ))}
+            <i className="chip">{SOURCE_LABEL[card.source]}</i>
+            {card.batch && <i className="chip">{card.batch}</i>}
           </div>
-          <p className="about">{startup.tagline}</p>
+          <p className="about">{card.tagline}</p>
+          {card.website && (
+            <p className="byline">
+              <a href={card.website} target="_blank" rel="noopener noreferrer">
+                {card.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+              </a>
+            </p>
+          )}
         </div>
       </div>
 
@@ -79,7 +100,7 @@ export default async function StartupPage({
         <h3>
           Status
           <span className="grow">
-            {rank ? `#${rank} on the ladder` : "Not on the board yet"}
+            {score.score > 0 ? `${above ?? 0} companies on the board` : "Not on the board yet"}
           </span>
         </h3>
         <div className="stats" style={{ gridTemplateColumns: "repeat(4,1fr)" }}>
@@ -108,14 +129,44 @@ export default async function StartupPage({
 
       <p className="sect">The profile</p>
       <div className="panel" style={{ marginBottom: 26 }}>
-        <div style={{ padding: "4px 20px 18px" }}>
-          {startup.prompts.map((p) => (
-            <div className="prompt" key={p.q}>
-              <q>{p.q}</q>
-              <p>{p.a}</p>
+        {prompts.length ? (
+          <>
+            <div style={{ padding: "4px 20px 18px" }}>
+              {prompts.map((p) => (
+                <div className="prompt" key={p.q}>
+                  <q>{p.q}</q>
+                  <p>{p.a}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="meta">
+              {card.author_handle ? (
+                <span>
+                  Written by{" "}
+                  <Link href={`/u/${card.author_handle}`} style={{ color: "var(--ink)" }}>
+                    {card.author_name}
+                  </Link>
+                </span>
+              ) : card.generated ? (
+                <span>
+                  Drafted from the company&rsquo;s own description
+                  {card.thin && " — thin source material, worth a rewrite"}
+                </span>
+              ) : (
+                <span>From the Founders Inc registry</span>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="empty">
+            {card.description ? (
+              <p style={{ margin: "0 0 12px", color: "var(--ink-2)", lineHeight: 1.55 }}>
+                {card.description}
+              </p>
+            ) : null}
+            Nobody has written this profile yet.
+          </div>
+        )}
       </div>
 
       <p className="sect">
@@ -145,24 +196,12 @@ export default async function StartupPage({
       ) : (
         <div className="panel">
           <div className="empty">
-            No one has written a vouch for {startup.name} yet. A vouch is one
-            line with your name on it — it is the strongest thing you can give
-            a founder here.
+            No one has written a vouch for {card.name} yet. A vouch is one line
+            with your name on it — the strongest thing you can give a founder
+            here.
           </div>
         </div>
       )}
     </>
   );
-}
-
-/** How many companies sit strictly above this score. */
-async function rankOf(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  score: number,
-) {
-  const { count } = await supabase
-    .from("startup_scores")
-    .select("slug", { count: "exact", head: true })
-    .gt("score", score);
-  return (count ?? 0) + 1;
 }

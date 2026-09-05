@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { BY_SLUG } from "@/lib/startups";
 import { Logo } from "@/components/Logo";
 
 export const dynamic = "force-dynamic";
@@ -34,14 +33,20 @@ export default async function ScoutPage({
   const [{ data: vouches }, { data: auth }] = await Promise.all([
     supabase
       .from("vouches")
-      .select("slug, body, created_at")
+      .select("slug, body, created_at, startups(name, tagline, logo_url)")
       .eq("user_id", profile.id)
       .order("created_at", { ascending: false }),
     supabase.auth.getUser(),
   ]);
 
   const isMe = auth.user?.id === profile.id;
-  const list = (vouches ?? []).filter((v) => BY_SLUG[v.slug]);
+  type Row = {
+    slug: string;
+    body: string;
+    created_at: string;
+    startups: { name: string; tagline: string; logo_url: string | null } | null;
+  };
+  const list = ((vouches as Row[] | null) ?? []).filter((v) => v.startups);
 
   return (
     <>
@@ -73,13 +78,13 @@ export default async function ScoutPage({
       {list.length ? (
         <div className="grid">
           {list.map((v) => {
-            const s = BY_SLUG[v.slug];
+            const s = v.startups!;
             return (
               <div className="entry" key={v.slug}>
-                <Logo startup={s} size={38} />
+                <Logo name={s.name} src={s.logo_url} size={38} />
                 <div style={{ minWidth: 0 }}>
                   <h4>
-                    <Link href={`/s/${s.slug}`}>{s.name}</Link>
+                    <Link href={`/s/${v.slug}`}>{s.name}</Link>
                   </h4>
                   <div className="tag">{s.tagline}</div>
                   {v.body.trim() && <div className="quote">{v.body}</div>}

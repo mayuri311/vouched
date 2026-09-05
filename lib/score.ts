@@ -15,16 +15,33 @@ export function tierOf(score: number): Tier {
   return TIERS.reduce((best, t) => (score >= t.min ? t : best), TIERS[0]);
 }
 
+/** A row of `startup_scores`, which carries the company's own fields too,
+ *  so a leaderboard needs no second lookup. */
 export type Score = {
   slug: string;
+  name: string;
+  tagline: string;
+  tags: string[];
+  logo_url: string | null;
+  source: string;
+  listed_at: string;
   rights: number;
   lefts: number;
   vouches: number;
   score: number;
 };
 
-export const EMPTY_SCORE = (slug: string): Score => ({
+export const SCORE_COLUMNS =
+  "slug, name, tagline, tags, logo_url, source, listed_at, rights, lefts, vouches, score";
+
+export const EMPTY_SCORE = (slug: string, name = "", tagline = ""): Score => ({
   slug,
+  name,
+  tagline,
+  tags: [],
+  logo_url: null,
+  source: "founders-inc",
+  listed_at: new Date(0).toISOString(),
   rights: 0,
   lefts: 0,
   vouches: 0,

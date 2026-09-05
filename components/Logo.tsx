@@ -1,21 +1,18 @@
-import type { Startup } from "@/lib/startups";
-
-/** The registry logo on its light tile — the same treatment f.inc uses,
- *  which keeps white-on-transparent marks legible in both themes. */
+/** The registry mark on its light tile — the treatment f.inc uses, which
+ *  keeps white-on-transparent logos legible in both themes. `src` is
+ *  either a local /logos/*.webp path or a remote URL from an ingest. */
 export function Logo({
-  startup,
+  name,
+  src,
   size = 38,
 }: {
-  startup: Pick<Startup, "name" | "logo">;
+  name: string;
+  src?: string | null;
   size?: 58 | 38 | 28;
 }) {
   return (
     <span className={`lg lg-${size}`}>
-      {startup.logo ? (
-        <img src={startup.logo} alt="" />
-      ) : (
-        <i>{startup.name[0]}</i>
-      )}
+      {src ? <img src={src} alt="" loading="lazy" /> : <i>{name[0]}</i>}
     </span>
   );
 }

@@ -236,3 +236,8 @@ table.board td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;fon
 .act:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .av{width:64px;height:64px;border-radius:18px;background:var(--accent-soft);color:var(--accent);
   display:grid;place-items:center;font-family:var(--f-disp);font-size:28px;font-weight:600;flex:none}
+
+/* A card whose profile nobody has written yet. */
+.unwritten{margin-top:16px;padding-top:16px;border-top:1px solid var(--hair)}
+.unwritten p{margin:0 0 14px;font-size:15px;line-height:1.5;color:var(--ink-2);text-wrap:pretty}
+.unwritten a{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;color:var(--accent)}

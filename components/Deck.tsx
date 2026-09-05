@@ -2,14 +2,22 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { STARTUPS, type Startup } from "@/lib/startups";
-import { EMPTY_SCORE, tierOf, type Score } from "@/lib/score";
+import {
+  CARD_COLUMNS,
+  PAGE_SIZE,
+  SOURCE_LABEL,
+  TOP_UP_AT,
+  type Card,
+} from "@/lib/registry";
+import { EMPTY_SCORE, SCORE_COLUMNS, tierOf, type Score } from "@/lib/score";
 import { createClient } from "@/lib/supabase/client";
 import { Logo } from "./Logo";
 
 type Props = {
   userId: string;
+  initialCards: Card[];
   initialScores: Score[];
+  registrySize: number;
   mySwipes: Record<string, number>;
   myVouches: Record<string, string>;
 };
@@ -23,7 +31,14 @@ const shuffle = <T,>(a: T[]) => {
   return out;
 };
 
-export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
+export function Deck({
+  userId,
+  initialCards,
+  initialScores,
+  registrySize,
+  mySwipes,
+  myVouches,
+}: Props) {
   const supabase = useMemo(() => createClient(), []);
 
   const [scores, setScores] = useState<Record<string, Score>>(() =>
@@ -32,11 +47,13 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
   const [swipes, setSwipes] = useState(mySwipes);
   const [vouches, setVouches] = useState(myVouches);
 
-  const [deck, setDeck] = useState<Startup[]>(() =>
-    shuffle(STARTUPS.filter((s) => !(s.slug in mySwipes))),
-  );
+  const [deck, setDeck] = useState<Card[]>(() => shuffle(initialCards));
   const [idx, setIdx] = useState(0);
-  const [sheetFor, setSheetFor] = useState<Startup | null>(null);
+  const [exhausted, setExhausted] = useState(initialCards.length < PAGE_SIZE);
+  const nextPage = useRef(1);
+  const loading = useRef(false);
+
+  const [sheetFor, setSheetFor] = useState<Card | null>(null);
   const [note, setNote] = useState("");
   const [toast, setToast] = useState("");
 
@@ -45,11 +62,67 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
     [scores],
   );
 
-  /* Someone else's swipe should show up here without a reload. */
+  /* ── paging ───────────────────────────────────────────────── */
+  // Everything already dealt or already swiped. Kept in a ref so fetching
+  // does not depend on swipe state and re-create itself on every card.
+  const seen = useRef(
+    new Set([...initialCards.map((c) => c.slug), ...Object.keys(mySwipes)]),
+  );
+
+  const loadMore = useCallback(async () => {
+    if (loading.current || exhausted) return;
+    loading.current = true;
+
+    // A whole page can be cards this person already swiped, which would
+    // leave the deck short and the top-up effect with nothing to react to.
+    // Keep pulling pages until one yields something new.
+    try {
+      while (true) {
+        const from = nextPage.current * PAGE_SIZE;
+        const { data, error } = await supabase
+          .from("deck_cards")
+          .select(CARD_COLUMNS)
+          .order("listed_at", { ascending: false })
+          .order("slug", { ascending: true })
+          .range(from, from + PAGE_SIZE - 1);
+
+        if (error || !data || data.length === 0) {
+          setExhausted(true);
+          return;
+        }
+
+        nextPage.current += 1;
+        const lastPage = data.length < PAGE_SIZE;
+
+        const fresh = ((data as unknown) as Card[]).filter(
+          (c) => !seen.current.has(c.slug),
+        );
+        fresh.forEach((c) => seen.current.add(c.slug));
+
+        if (fresh.length) {
+          setDeck((d) => [...d, ...shuffle(fresh)]);
+          if (lastPage) setExhausted(true);
+          return;
+        }
+        if (lastPage) {
+          setExhausted(true);
+          return;
+        }
+      }
+    } finally {
+      loading.current = false;
+    }
+  }, [exhausted, supabase, mySwipes]);
+
+  useEffect(() => {
+    if (deck.length - idx <= TOP_UP_AT) void loadMore();
+  }, [deck.length, idx, loadMore]);
+
+  /* ── live scores ──────────────────────────────────────────── */
   const refreshScores = useCallback(async () => {
     const { data } = await supabase
       .from("startup_scores")
-      .select("slug, rights, lefts, vouches, score");
+      .select(SCORE_COLUMNS);
     if (data) {
       setScores(Object.fromEntries(data.map((s) => [s.slug, s as Score])));
     }
@@ -73,6 +146,7 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
 
   const current = deck[idx];
 
+  const noteRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     if (sheetFor) setTimeout(() => noteRef.current?.focus(), 340);
   }, [sheetFor]);
@@ -80,55 +154,58 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
   const bump = useCallback((slug: string, dir: number, vouched = false) => {
     setScores((prev) => {
       const at = prev[slug] ?? EMPTY_SCORE(slug);
-      const next: Score = {
-        ...at,
-        rights: at.rights + (dir > 0 ? 1 : 0),
-        lefts: at.lefts + (dir < 0 ? 1 : 0),
-        vouches: at.vouches + (vouched ? 1 : 0),
-        score: at.score + (dir > 0 ? 1 : 0) + (vouched ? 3 : 0),
+      return {
+        ...prev,
+        [slug]: {
+          ...at,
+          rights: at.rights + (dir > 0 ? 1 : 0),
+          lefts: at.lefts + (dir < 0 ? 1 : 0),
+          vouches: at.vouches + (vouched ? 1 : 0),
+          score: at.score + (dir > 0 ? 1 : 0) + (vouched ? 3 : 0),
+        },
       };
-      return { ...prev, [slug]: next };
     });
   }, []);
 
   const commit = useCallback(
-    async (startup: Startup, dir: number) => {
-      setSwipes((p) => ({ ...p, [startup.slug]: dir }));
-      bump(startup.slug, dir);
+    async (card: Card, dir: number) => {
+      setSwipes((p) => ({ ...p, [card.slug]: dir }));
+      seen.current.add(card.slug);
+      bump(card.slug, dir);
       const { error } = await supabase
         .from("swipes")
-        .upsert({ user_id: userId, slug: startup.slug, dir });
+        .upsert({ user_id: userId, slug: card.slug, dir });
       if (error) setToast("Could not save that swipe — check your connection");
-      else if (dir > 0) setSheetFor(startup);
+      else if (dir > 0) setSheetFor(card);
     },
     [bump, supabase, userId],
   );
 
   async function sendVouch() {
-    const startup = sheetFor;
-    if (!startup) return;
+    const card = sheetFor;
+    if (!card) return;
     const body = note.trim();
 
-    setVouches((p) => ({ ...p, [startup.slug]: body }));
-    bump(startup.slug, 0, true);
+    setVouches((p) => ({ ...p, [card.slug]: body }));
+    bump(card.slug, 0, true);
     setSheetFor(null);
     setNote("");
 
     const { error } = await supabase
       .from("vouches")
-      .upsert({ user_id: userId, slug: startup.slug, body });
+      .upsert({ user_id: userId, slug: card.slug, body });
 
     if (error) {
       setToast("Could not save that vouch — try again");
       return;
     }
-    const after = (scoreOf(startup.slug).score ?? 0) + 3;
-    setToast(`${startup.name} → ${tierOf(after).name.toUpperCase()}`);
+    setToast(
+      `${card.name} → ${tierOf(scoreOf(card.slug).score + 3).name.toUpperCase()}`,
+    );
   }
 
   /* ── drag ─────────────────────────────────────────────────── */
   const cardRef = useRef<HTMLElement | null>(null);
-  const noteRef = useRef<HTMLInputElement | null>(null);
   const drag = useRef({ x: 0, y: 0, dx: 0, on: false, moved: false });
 
   const stamps = (el: HTMLElement) => ({
@@ -139,17 +216,16 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
   const fly = useCallback(
     (dir: number) => {
       const el = cardRef.current;
-      const startup = deck[idx];
-      if (!el || !startup) return;
+      const card = deck[idx];
+      if (!el || !card) return;
 
       el.classList.add("anim");
       el.style.transform = `translate(${dir * window.innerWidth}px, 60px) rotate(${dir * 22}deg)`;
       el.style.opacity = "0";
-      const s = stamps(el);
-      const shown = dir > 0 ? s.yes : s.no;
+      const shown = dir > 0 ? stamps(el).yes : stamps(el).no;
       if (shown) shown.style.opacity = "1";
 
-      void commit(startup, dir);
+      void commit(card, dir);
       setTimeout(() => setIdx((i) => i + 1), 240);
     },
     [commit, deck, idx],
@@ -212,19 +288,18 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
   /* ── derived ──────────────────────────────────────────────── */
   const ladder = useMemo(
     () =>
-      STARTUPS.map((s) => ({ s, sc: scoreOf(s.slug) }))
-        .filter((r) => r.sc.score > 0)
+      Object.values(scores)
+        .filter((s) => s.score > 0)
         .sort(
           (a, b) =>
-            b.sc.score - a.sc.score ||
-            b.sc.rights - a.sc.rights ||
-            a.s.name.localeCompare(b.s.name),
+            b.score - a.score || b.rights - a.rights || a.name.localeCompare(b.name),
         )
         .slice(0, 10),
-    [scoreOf],
+    [scores],
   );
 
   const rights = Object.values(swipes).filter((d) => d > 0).length;
+  const left = Math.max(deck.length - idx, 0);
 
   return (
     <>
@@ -234,12 +309,13 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
             {current ? (
               deck
                 .slice(idx, idx + 3)
-                .map((s, depth) => {
-                  const sc = scoreOf(s.slug);
+                .map((card, depth) => {
+                  const sc = scoreOf(card.slug);
                   const tier = tierOf(sc.score);
+                  const prompts = card.prompts ?? [];
                   return (
                     <article
-                      key={s.slug}
+                      key={card.slug}
                       ref={depth === 0 ? (el) => { cardRef.current = el; } : undefined}
                       className={`card${depth === 0 ? " is-top" : ""}`}
                       style={
@@ -257,27 +333,40 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
                     >
                       <div className="body">
                         <div className="ident">
-                          <Logo startup={s} size={58} />
+                          <Logo name={card.name} src={card.logo_url} size={58} />
                           <div>
-                            <h2>{s.name}</h2>
+                            <h2>{card.name}</h2>
                             <div className="chips">
-                              {(s.tags.length ? s.tags : ["Founders Inc"]).map(
-                                (t) => (
+                              {(card.tags.length
+                                ? card.tags
+                                : [SOURCE_LABEL[card.source]]
+                              )
+                                .slice(0, 4)
+                                .map((t) => (
                                   <i className="chip" key={t}>
                                     {t}
                                   </i>
-                                ),
-                              )}
+                                ))}
                             </div>
                           </div>
                         </div>
-                        <p className="bio">{s.tagline}</p>
-                        {s.prompts.map((p) => (
-                          <div className="prompt" key={p.q}>
-                            <q>{p.q}</q>
-                            <p>{p.a}</p>
+                        <p className="bio">{card.tagline}</p>
+
+                        {prompts.length ? (
+                          prompts.map((p) => (
+                            <div className="prompt" key={p.q}>
+                              <q>{p.q}</q>
+                              <p>{p.a}</p>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="unwritten">
+                            {card.description && <p>{card.description}</p>}
+                            <Link href={`/s/${card.slug}`}>
+                              Nobody has written this profile yet →
+                            </Link>
                           </div>
-                        ))}
+                        )}
                       </div>
                       <div className="meta">
                         <span
@@ -300,14 +389,21 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
             ) : (
               <div className="card is-top">
                 <div className="done">
-                  <h3>That&rsquo;s the whole registry.</h3>
+                  <h3>
+                    {exhausted
+                      ? "That’s the whole registry."
+                      : "Loading more…"}
+                  </h3>
                   <p>
-                    You went through all {STARTUPS.length} Founders Inc
-                    companies. The ladder keeps everything you built.
+                    {exhausted
+                      ? `You went through all ${registrySize} companies. New ones keep arriving — the ladder keeps everything you built.`
+                      : "Pulling the next batch of companies."}
                   </p>
-                  <Link className="btn" href="/ladder">
-                    See where they landed
-                  </Link>
+                  {exhausted && (
+                    <Link className="btn" href="/ladder">
+                      See where they landed
+                    </Link>
+                  )}
                 </div>
               </div>
             )}
@@ -347,7 +443,7 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
           <div className="panel">
             <h3>
               Your run
-              <span className="grow">{Math.max(deck.length - idx, 0)} left</span>
+              <span className="grow">{left} left</span>
             </h3>
             <div className="stats">
               <div>
@@ -374,26 +470,26 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
             </h3>
             {ladder.length ? (
               <ol className="lad">
-                {ladder.map((r, i) => (
-                  <li key={r.s.slug} className={swipes[r.s.slug] > 0 ? "mine" : ""}>
+                {ladder.map((s, i) => (
+                  <li key={s.slug} className={swipes[s.slug] > 0 ? "mine" : ""}>
                     <span className="rk">{i + 1}</span>
-                    <Logo startup={r.s} size={28} />
-                    <Link className="nm" href={`/s/${r.s.slug}`}>
-                      {r.s.name}
+                    <Logo name={s.name} src={null} size={28} />
+                    <Link className="nm" href={`/s/${s.slug}`}>
+                      {s.name}
                     </Link>
                     <span
                       className="sc"
-                      style={{ color: r.sc.score >= 5 ? "var(--accent)" : "var(--ink)" }}
+                      style={{ color: s.score >= 5 ? "var(--accent)" : "var(--ink)" }}
                     >
-                      {r.sc.score}
+                      {s.score}
                     </span>
                   </li>
                 ))}
               </ol>
             ) : (
               <div className="empty">
-                Nothing on the board yet. A right swipe is +1, a signed vouch
-                is +3.
+                Nothing on the board yet. A right swipe is +1, a signed vouch is
+                +3.
               </div>
             )}
           </div>
@@ -405,12 +501,12 @@ export function Deck({ userId, initialScores, mySwipes, myVouches }: Props) {
         <div className="sub">{sheetFor?.tagline ?? ""}</div>
         <div className="row">
           <input
+            ref={noteRef}
             value={note}
             onChange={(e) => setNote(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendVouch()}
             maxLength={140}
-            placeholder={"I\u2019d use this tomorrow because\u2026"}
-            ref={noteRef}
+            placeholder={"I’d use this tomorrow because…"}
           />
           <button className="btn" onClick={sendVouch}>
             Vouch

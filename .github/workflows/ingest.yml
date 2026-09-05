@@ -1,0 +1,42 @@
+name: Ingest new startups
+
+# Runs daily. The service role key and the Anthropic key live here as repo
+# secrets rather than in Vercel, so neither is present in the deployed app.
+on:
+  schedule:
+    - cron: "0 13 * * *" # 09:00 America/New_York
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: "YC batch slug (blank = most recent)"
+        required: false
+        default: ""
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Pull the YC batch
+        run: node scripts/ingest-yc.mjs ${{ inputs.batch }}
+
+      # Writes profiles only for startups that have none, so this also picks
+      # up anything a previous run left unfinished.
+      - name: Write profiles for anything new
+        run: node scripts/generate-profiles.mjs
